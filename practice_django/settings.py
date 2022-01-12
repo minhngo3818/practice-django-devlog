@@ -32,9 +32,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # My Apps
-    'projects',
-
     # Default Apps
     'django.contrib.admin',
     'django.contrib.auth',
@@ -42,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # My Apps
+    'projects.apps.ProjectsConfig',
 ]
 
 MIDDLEWARE = [

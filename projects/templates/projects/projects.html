@@ -2,11 +2,11 @@
 {% extends 'main.html' %}
 
 {% block content %}
+<h1>Projects</h1>
 
 <table>
     <thead>
         <tr>
-            <th>ID</th>
             <th>Title</th>
             <th>Description</th>
         </tr>
@@ -14,9 +14,12 @@
 
     <tbody>
         {% for project in projects %}
+        <!--                 ^
+                  must match with key
+                  of context variable in views.py
+        -->
         <tr>
-            <td>{{ project.id }}</td>
-            <td>{{ project.title }}</td>
+            <td><a href="{% url 'project' project.id %}">{{ project.title }}</a></td>
             <td>{{ project.description }}</td>
         </tr>
         {% endfor %}
