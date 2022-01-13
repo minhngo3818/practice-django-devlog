@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Project
+from .forms import ProjectForm
 
 
 # Create your views here.
@@ -14,7 +15,44 @@ def project(request, pk):
     tags = projectObj.tags.all()
     reviews = projectObj.reviews.all()
     context = {'project': projectObj, 'tags': tags, 'reviews': reviews}
-    return render(request, 'single_project.html', context)
+    return render(request, 'single-project.html', context)
+
+
+def createProject(request):
+    form = ProjectForm()
+
+    if request.method == 'POST':            # signal to send data to backend
+        form = ProjectForm(request.POST)    # find any data and past to form
+        if form.is_valid():                 # check data is correct
+            form.save()
+            return redirect('projects')     # redirect to homepage
+
+    context = {'form': form}
+    return render(request, 'project-form.html', context)
+
+
+def updateProject(request, pk):
+    project = Project.objects.get(id=pk)
+    form = ProjectForm(instance=project)    # pass the editing object to a form
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)  # pass again the editing object to a form
+        if form.is_valid():
+            form.save()
+            return redirect('projects')
+
+    context = {'form': form}
+    return render(request, 'project-form.html', context)
+
+
+def deleteProject(request, pk):
+    project = Project.objects.get(id=pk)
+
+    if request.method == 'POST':
+        project.delete()
+        return redirect('projects')
+
+    return render(request, 'delete.html', {'object': project})
 
 # Put this into template if using right access obj in templates
 # <!-- To access right on template follow belows
