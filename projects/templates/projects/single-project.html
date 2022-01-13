@@ -15,9 +15,11 @@
 
 <hr>
 
-<h3>Reviews</h3>
+<h3>Reviews:</h3>
 
 {% for review in reviews %}
+    <p>{{ review.updated }}</p>
+    <p>{{ review.value }}</p>
     <p>{{ review.body }}</p>
 {% endfor %}
 

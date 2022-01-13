@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends 'main.html' %}
+
+{% block content %}
+<form method="POST" action="">
+    <!-- method="POST" send data to backend -->
+    {% csrf_token %}    <!-- prevent csrf attacks which contain malicious scripts-->
+                        <!-- not necessary when using api -->
+    <!-- {{ form.title.label }}  label form input title -->
+    <!-- {{ form.title }} -->
+
+    {{ form.as_p }}
+
+    <input type="submit" value="Submit" /> <!-- submit button-->
+</form>
+
+{% endblock content %}
