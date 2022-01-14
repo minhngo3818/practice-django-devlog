@@ -21,3 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('projects.urls'))
 ]
+
+# urlpatterns += static()

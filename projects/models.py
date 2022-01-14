@@ -11,7 +11,7 @@ class Project(models.Model):
     #                                ^           ^
     #                       can be empty        django knows
     #                       in database         it can be blank
-    #featured_image =
+    featured_image = models.ImageField(null=True, blank=True)
     demo_link = models.CharField(max_length=1000, null=True, blank=True)
     src_link = models.CharField(max_length=1000, null=True, blank=True)
     vote_total = models.IntegerField(default=0)
@@ -29,6 +29,13 @@ class Project(models.Model):
     # Note:
     # auto_now=True update time whenever there is a modification
     # auto_now_add=True update time whenever an instance is created
+    @property
+    def imageURL(self):
+        try:
+            img_url = self.featured_image.url
+        except:
+            img_url = ''
+        return img_url
 
 
 class Review(models.Model):

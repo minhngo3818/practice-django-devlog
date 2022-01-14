@@ -22,7 +22,7 @@ def createProject(request):
     form = ProjectForm()
 
     if request.method == 'POST':            # signal to send data to backend
-        form = ProjectForm(request.POST)    # find any data and past to form
+        form = ProjectForm(request.POST, request.FILES)    # find any data and past to form
         if form.is_valid():                 # check data is correct
             form.save()
             return redirect('projects')     # redirect to homepage
@@ -36,7 +36,7 @@ def updateProject(request, pk):
     form = ProjectForm(instance=project)    # pass the editing object to a form
 
     if request.method == 'POST':
-        form = ProjectForm(request.POST, instance=project)  # pass again the editing object to a form
+        form = ProjectForm(request.POST, request.FILES, instance=project)  # pass again the editing object to a form
         if form.is_valid():
             form.save()
             return redirect('projects')
