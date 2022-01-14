@@ -2,7 +2,9 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<form method="POST" action="">
+<form method="POST" action="" enctype="multipart/form-data">
+    <!--                                    ^       -->
+    <!--                  let forms know send files along with standard forms data -->
     <!-- method="POST" send data to backend -->
     {% csrf_token %}    <!-- prevent csrf attacks which contain malicious scripts-->
                         <!-- not necessary when using api -->

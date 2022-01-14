@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'practiceDjangpo9*&$*#!@24v)0$d76bj@_73swt&ekt)_gw+hh6vx+ek%=$sxf)#f7zp5237'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     # static file processing tool
+    # unable to handle static files from user aka uploaded static files
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
@@ -127,14 +128,16 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = '/static/'
-
 MEDIA_URL = '/images/'
 
 STATICFILES_DIRS = [
     BASE_DIR / 'static'
 ]
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'images')
+# Root directory to send static files from front to back
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+# Root dir for handling static files when deploying the website
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
