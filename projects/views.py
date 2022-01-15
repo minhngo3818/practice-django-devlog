@@ -15,7 +15,7 @@ def project(request, pk):
     tags = projectObj.tags.all()
     reviews = projectObj.reviews.all()
     context = {'project': projectObj, 'tags': tags, 'reviews': reviews}
-    return render(request, 'single-project.html', context)
+    return render(request, 'projects/single-project.html', context)
 
 
 def createProject(request):

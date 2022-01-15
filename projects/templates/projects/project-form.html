@@ -2,18 +2,41 @@
 {% extends 'main.html' %}
 
 {% block content %}
-<form method="POST" action="" enctype="multipart/form-data">
-    <!--                                    ^       -->
-    <!--                  let forms know send files along with standard forms data -->
-    <!-- method="POST" send data to backend -->
-    {% csrf_token %}    <!-- prevent csrf attacks which contain malicious scripts-->
-                        <!-- not necessary when using api -->
-    <!-- {{ form.title.label }}  label form input title -->
-    <!-- {{ form.title }} -->
+<!--<form method="POST" action="" enctype="multipart/form-data">-->
+<!--    &lt;!&ndash;                                    ^       &ndash;&gt;-->
+<!--    &lt;!&ndash;                  let forms know send files along with standard forms data &ndash;&gt;-->
+<!--    &lt;!&ndash; method="POST" send data to backend &ndash;&gt;-->
+<!--    {% csrf_token %}    &lt;!&ndash; prevent csrf attacks which contain malicious scripts&ndash;&gt;-->
+<!--                        &lt;!&ndash; not necessary when using api &ndash;&gt;-->
+<!--    &lt;!&ndash; {{ form.title.label }}  label form input title &ndash;&gt;-->
+<!--    &lt;!&ndash; {{ form.title }} &ndash;&gt;-->
 
-    {{ form.as_p }}
+<!--    {{ form.as_p }}-->
 
-    <input type="submit" value="Submit" /> <!-- submit button-->
-</form>
+<!--    <input type="submit" value="Submit" /> &lt;!&ndash; submit button&ndash;&gt;-->
+<!--</form>-->
 
+<!-- Main Section -->
+<main class="formPage my-xl">
+    <div class="content-box">
+        <div class="formWrapper">
+            <a class="backButton" href="#"><i class="im im-angle-left"></i></a>
+            <br>
+
+            <form class="form" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                {% for field in form %}
+                <!-- Input:Text -->
+                <div class="form__field">
+                    <label for="formInput#text">{{field.label}}: </label>
+                    {{field}}
+                </div>
+                {% endfor %}
+
+                <input class="btn btn--sub btn--lg  my-md" type="submit" value="Submit" />
+            </form>
+        </div>
+    </div>
+</main>
 {% endblock content %}
