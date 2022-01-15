@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'practiceDjangpo9*&$*#!@24v)0$d76bj@_73swt&ekt)_gw+hh6vx+ek%=$sxf)#f7zp5237'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
 
     # My Apps
     'projects.apps.ProjectsConfig',
+    'users.apps.UsersConfig'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +66,8 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             os.path.join(BASE_DIR, 'templates'),
-            os.path.join(BASE_DIR, 'projects/templates/projects')
+            os.path.join(BASE_DIR, 'projects/templates/projects'),
+            os.path.join(BASE_DIR, 'users/templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
