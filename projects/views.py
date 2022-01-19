@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 from .models import Project
 from .forms import ProjectForm
 
@@ -18,6 +19,7 @@ def project(request, pk):
     return render(request, 'projects/single-project.html', context)
 
 
+@login_required(login_url='login')     # decorator to require user login to view/ restrict to member user
 def createProject(request):
     form = ProjectForm()
 
@@ -31,6 +33,7 @@ def createProject(request):
     return render(request, 'project-form.html', context)
 
 
+@login_required(login_url='login')
 def updateProject(request, pk):
     project = Project.objects.get(id=pk)
     form = ProjectForm(instance=project)    # pass the editing object to a form
