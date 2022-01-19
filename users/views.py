@@ -1,8 +1,45 @@
-from django.shortcuts import render
-from .models import Profile, Skill
+from django.shortcuts import render, redirect
+from django.contrib.auth import login, authenticate, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.models import User
+from .models import Profile
 
 
 # Create your views here.
+def loginUser(request):
+
+    # Always redirect to profile page from login whenever user is authenticated
+    if request.user.is_authenticated:
+        return redirect('profiles')
+
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        # check whether user exist or not
+        try:
+            user = User.objects.get(username=username)
+        except:
+            messages.error(request, 'Username does not exist')
+
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            login(request, user)
+            return redirect('profiles')
+        else:
+            messages.error(request, 'Username OR password is incorrect')
+
+    return render(request, 'users/login_register.html')
+
+
+def logoutUser(request):
+    logout(request)
+    messages.error(request, 'User logged out!')
+    return redirect('login')
+
+
 def profiles(request):
     profiles_obj = Profile.objects.all()
     context = {'profiles': profiles_obj}
