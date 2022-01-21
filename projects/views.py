@@ -21,21 +21,25 @@ def project(request, pk):
 
 @login_required(login_url='login')     # decorator to require user login to view/ restrict to member user
 def createProject(request):
+    profile = request.user.profile
     form = ProjectForm()
 
     if request.method == 'POST':            # signal to send data to backend
         form = ProjectForm(request.POST, request.FILES)    # find any data and past to form
         if form.is_valid():                 # check data is correct
-            form.save()
+            project = form.save(commit=False)
+            project.owner = profile
+            project.save()
             return redirect('projects')     # redirect to homepage
 
     context = {'form': form}
-    return render(request, 'project-form.html', context)
+    return render(request, 'projects/project-form.html', context)
 
 
 @login_required(login_url='login')
 def updateProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = profile.project_set.get(id=pk)
     form = ProjectForm(instance=project)    # pass the editing object to a form
 
     if request.method == 'POST':
@@ -48,14 +52,17 @@ def updateProject(request, pk):
     return render(request, 'project-form.html', context)
 
 
+@login_required(login_url='login')
 def deleteProject(request, pk):
-    project = Project.objects.get(id=pk)
+    profile = request.user.profile
+    project = Project.project_set.get(id=pk)
 
     if request.method == 'POST':
         project.delete()
         return redirect('projects')
 
-    return render(request, 'delete.html', {'object': project})
+    context = {'object': project}
+    return render(request, 'delete.html', context )
 
 # Put this into template if using right access obj in templates
 # <!-- To access right on template follow belows

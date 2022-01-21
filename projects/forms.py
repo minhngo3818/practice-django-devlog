@@ -6,14 +6,13 @@ from .models import Project
 class ProjectForm(ModelForm):
     class Meta:
         model = Project
-        fields = '__all__'  # add all fields in modelfrom
+        fields = ['title', 'featured_image', 'description',
+                  'demo_link', 'src_link']  # add all fields in modelfrom
 
         # Create a check box style for tags
         widgets = {
             'tags': forms.CheckboxSelectMultiple(),
         }
-
-        exclude = ['vote_total', 'vote_ratio']
 
 # Re-modify field to render each object of tags
     def __init__(self, *args, **kwargs):
