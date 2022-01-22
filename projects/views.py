@@ -30,7 +30,7 @@ def createProject(request):
             project = form.save(commit=False)
             project.owner = profile
             project.save()
-            return redirect('projects')     # redirect to homepage
+            return redirect('account')     # redirect to homepage
 
     context = {'form': form}
     return render(request, 'projects/project-form.html', context)
@@ -46,7 +46,7 @@ def updateProject(request, pk):
         form = ProjectForm(request.POST, request.FILES, instance=project)  # pass again the editing object to a form
         if form.is_valid():
             form.save()
-            return redirect('projects')
+            return redirect('account')
 
     context = {'form': form}
     return render(request, 'project-form.html', context)
@@ -55,14 +55,14 @@ def updateProject(request, pk):
 @login_required(login_url='login')
 def deleteProject(request, pk):
     profile = request.user.profile
-    project = Project.project_set.get(id=pk)
+    project = profile.project_set.get(id=pk)
 
     if request.method == 'POST':
         project.delete()
         return redirect('projects')
 
     context = {'object': project}
-    return render(request, 'delete.html', context )
+    return render(request, 'delete.html', context)
 
 # Put this into template if using right access obj in templates
 # <!-- To access right on template follow belows
