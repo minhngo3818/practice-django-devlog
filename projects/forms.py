@@ -7,7 +7,7 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'featured_image', 'description',
-                  'demo_link', 'src_link']  # add all fields in modelfrom
+                  'demo_link', 'src_link', 'tags']  # add all fields in modelfrom
 
         # Create a check box style for tags
         widgets = {
@@ -22,3 +22,4 @@ class ProjectForm(ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
+
