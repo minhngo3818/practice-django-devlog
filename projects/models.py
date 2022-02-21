@@ -1,5 +1,7 @@
 from django.db import models
 import uuid
+
+from django.db.models.deletion import CASCADE
 from users.models import Profile
 
 
@@ -41,20 +43,19 @@ class Project(models.Model):
         return img_url
 
     class Meta:
-        ordering = ['-created']
+        ordering = ['-created', '-vote_ratio', '-vote_total']
 
 
 class Review(models.Model):
 
     # Drop down menu
     VOTE_TYPE = (
-        ('up', 'up'),
-        ('down', 'down')
+        ('up', 'Up Vote'),
+        ('down', 'Down Vote')
     )
 
-    # owner
-    project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, null=True, blank=True, related_name='reviews')
+    owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     # on_delete: what happen to instance of Review when Project is deleted
     #       -> SET_NULL: project is null, reviews remain
     #       -> CASCADE: project is null, reviews are deleted
@@ -70,6 +71,9 @@ class Review(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
+
+    class Meta:
+        unique_together = [['owner', 'project']]    # prevent 1 user spam many reviews on 1 project
 
     def __str__(self):
         return self.value
