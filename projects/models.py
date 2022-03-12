@@ -18,8 +18,8 @@ class Project(models.Model):
         null=True, blank=True, upload_to='projects/', default='projects/default.jpg')
     demo_link = models.CharField(max_length=1000, null=True, blank=True)
     src_link = models.CharField(max_length=1000, null=True, blank=True)
-    vote_total = models.IntegerField(default=0)
-    vote_ratio = models.IntegerField(default=0)
+    vote_total = models.IntegerField(default=0, null=True, blank=True)
+    vote_ratio = models.IntegerField(default=0, null=True, blank=True)
     tags = models.ManyToManyField('Tag', blank=True)   # a string 'Tag' to avoid in-order-code error
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
@@ -46,6 +46,8 @@ class Project(models.Model):
         ordering = ['-created', '-vote_ratio', '-vote_total']
 
 
+
+
 class Review(models.Model):
 
     # Drop down menu
@@ -55,7 +57,7 @@ class Review(models.Model):
     )
 
     owner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     # on_delete: what happen to instance of Review when Project is deleted
     #       -> SET_NULL: project is null, reviews remain
     #       -> CASCADE: project is null, reviews are deleted
@@ -66,7 +68,7 @@ class Review(models.Model):
     body = models.TextField(null=True, blank=True)
 
     # Value of votes
-    value = models.CharField(max_length=50, choices=VOTE_TYPE)
+    value = models.CharField(max_length=200, choices=VOTE_TYPE)
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,

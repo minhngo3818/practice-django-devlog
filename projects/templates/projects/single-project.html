@@ -41,10 +41,12 @@
           <div class="comments">
             <h3 class="singleProject__subtitle">Feedback</h3>
             <h5 class="project--rating">
-              {{project.vote_ratio}}% Feedback ({{project.vote_total}} Vote{{project.vote_total|pluralize:"s" }})
-            </h5>
+              {{project.vote_ratio}}% Positive Feedback ({{project.vote_total}}
+              Vote{{project.vote_total|pluralize:"s"}})
+            </h5>   <!--ERROR IN THIS <h5> TAG-->
 
             <form class="form" action="{% url 'project' project.id %}" method="POST" enctype="multipart/form-data">
+              {% csrf_token %}
               {% for field in form %}
                 <div class="form__field">
                   <label for="formInput#textarea">{{field.label}}</label>
@@ -70,6 +72,7 @@
                      class="comment__author">{{review.owner.name}}</a>
                   <p class="comment__info">{{review.body|linebreaksbr}}</p>
                 </div>
+
               </div>
               {% endif %}
               {% endfor %}
