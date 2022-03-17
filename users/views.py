@@ -17,7 +17,7 @@ def loginUser(request):
         return redirect('profiles')
 
     if request.method == 'POST':
-        username = request.POST['username']
+        username = request.POST['username'].lower()     # Convert all username to lowercase to prevent case sensitivity
         password = request.POST['password']
 
         # check whether user exist or not
@@ -30,7 +30,7 @@ def loginUser(request):
 
         if user is not None:
             login(request, user)
-            return redirect('profiles')
+            return redirect(request.GET['next'] if 'next' in request.GET else 'account')
         else:
             messages.error(request, 'Username OR password is incorrect')
 

@@ -43,7 +43,26 @@ class Project(models.Model):
         return img_url
 
     class Meta:
-        ordering = ['-created', '-vote_ratio', '-vote_total']
+        ordering = ['-vote_ratio', '-vote_total', 'title']
+
+    @property
+    def reviewers(self):
+        queryset = self.review_set.all().values_list('owner__id', flat=True)
+        # Simple list of id objects, 'flat' convert those objs into a boolean list
+
+        return queryset
+
+    @property
+    def getVoteCount(self):
+        reviews = self.review_set.all()
+        upVotes = reviews.filter(value='up').count()
+        totalVotes = reviews.count()
+
+        ratio = (upVotes / totalVotes) * 100
+        self.vote_total = totalVotes
+        self.vote_ratio = ratio
+        self.save()
+
 
 
 

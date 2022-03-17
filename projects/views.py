@@ -33,7 +33,7 @@ def project(request, pk):
         review.save()
 
         # Update project vote count
-        projectObj.getVoteCount
+        projectObj.getVoteCount     # Unnecessary to call function by adding (), since it is a property
 
         # Send a message to frontend
         messages.success(request, 'Your review was successfully submitted!')
