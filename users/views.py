@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 from django.contrib.auth.models import User
-from .models import Profile
+from .models import Profile, Message
 from .forms import CustomUserCreationForm, ProfileForm, SkillForm
 from .utils import searchProjects, paginateProfiles
 
@@ -161,7 +161,21 @@ def deleteSkill(request, pk):
     skill = profile.skill_set.get(id=pk)
     if request.method == 'POST':
         skill.delete()
+        messages.success(request, 'Skill was deleted successfully!')
+
         return redirect('account')
 
     context = {'object': skill}
     return render(request, 'delete.html', context)
+
+
+@login_required(login_url='login')
+def inbox(request):
+    profile = request.user.profile
+    messageRequests = profile.messages.all()
+    # messages is the set_name for related_name in models class Message
+    # messages cause no conflict with messages from django contrib
+
+    unreadCount = messageRequests.filter(is_read=False).count
+    context = { 'messageRequests': messageRequests, 'unreadCount': unreadCount}
+    return render(request, 'users/inbox.html', context)
