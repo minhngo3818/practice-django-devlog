@@ -42,7 +42,8 @@ INSTALLED_APPS = [
 
     # My Apps
     'projects.apps.ProjectsConfig',
-    'users.apps.UsersConfig'
+    'users.apps.UsersConfig',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
