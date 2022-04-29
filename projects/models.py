@@ -8,7 +8,7 @@ from users.models import Profile
 # Create your models here.
 # Models is used for manipulate data from database
 class Project(models.Model):
-    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.SET_NULL)
+    owner = models.ForeignKey(Profile, null=True, blank=True, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     #                                ^           ^

@@ -50,7 +50,7 @@ def updateUser(sender, instance, created, **kwargs):
 
 #@receiver(post_delete, sender=Profile)
 def deleteUser(sender, instance, **kwargs):
-    try:
+    try:        # try catch wil prevent deleted used resolve no matching user profile html error
         user = instance.user
         user.delete()
     except:

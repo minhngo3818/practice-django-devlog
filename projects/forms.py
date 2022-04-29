@@ -8,7 +8,8 @@ class ProjectForm(ModelForm):
     class Meta:
         model = Project
         fields = ['title', 'featured_image', 'description',
-                  'demo_link', 'src_link', 'tags']  # add all fields in modelfrom
+                  'demo_link', 'src_link']  # add all fields in modelfrom
+        # tags is removed for not storing tags from created project
 
         # Create a check box style for tags
         widgets = {
