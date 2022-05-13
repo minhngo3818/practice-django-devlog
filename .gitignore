@@ -4,3 +4,4 @@ taskTracker.txt
 practice_django/__pycache__/*
 projects/__pycache__/*
 users/__pycache__/*
+api/__pycache__/*
